@@ -103,9 +103,11 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right,
+  background: linear-gradient(
+      to right,
       rgba(255, 255, 255, 0.05) 1px,
-      transparent 1px),
+      transparent 1px
+    ),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
   background-size: 50px 50px;
   pointer-events: none;
@@ -128,7 +130,7 @@ body {
   }
 
   .text-secondary {
-    color: hsl(var(--foreground) / 0.60);
+    color: hsl(var(--foreground) / 0.6);
   }
 
   /* Responsive overflow prevention */
@@ -155,4 +157,120 @@ body {
       font-size: 14px;
     }
   }
+}
+
+/* ============================================
+   🎨 SMOOTH THEME TRANSITIONS - CareerLyze
+   ============================================ */
+
+/* ✅ OPTIMIZED: Target only theme-sensitive elements */
+/* ❌ REMOVED: * { transition } - causes performance issues */
+
+/* Core layout transitions */
+html,
+body {
+  transition: background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Structural elements */
+header,
+nav,
+main,
+footer,
+aside,
+section,
+article,
+div[class*="container"],
+div[class*="wrapper"],
+div[class*="layout"] {
+  transition:
+    background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Cards & panels */
+[class*="card"],
+[class*="panel"],
+[data-radix-popper-content-wrapper],
+[role="dialog"],
+[role="menu"] {
+  transition:
+    background-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+label,
+a {
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Interactive elements */
+button,
+[role="button"],
+[class*="btn"],
+input,
+textarea,
+select {
+  transition:
+    background-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    color 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Borders & dividers */
+hr,
+[class*="divider"],
+[class*="separator"],
+[class*="border"] {
+  transition: border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* SVG & icons */
+svg,
+svg path {
+  transition:
+    color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    fill 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    stroke 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================
+   ⚡ PERFORMANCE OPTIMIZATION
+   ============================================ */
+
+/* Prevent transitions on page load (flash prevention) */
+.no-transition,
+.no-transition * {
+  transition: none !important;
+}
+
+/* GPU acceleration for smooth animations */
+button,
+[class*="btn"],
+svg {
+  will-change: auto;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Dark mode background - prevents white flash */
+html.dark {
+  background-color: hsl(var(--background));
+  color-scheme: dark;
+}
+
+html:not(.dark) {
+  color-scheme: light;
 }
