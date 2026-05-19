@@ -1,12 +1,27 @@
 "use client";
 
-import { useState } from "react";
-import { saveUserSkills } from "@/actions/skills";
-
+import { useState,useEffect } from "react";
+import { saveUserSkills,getUserSkills } from "@/actions/skills";
 export default function SkillInput() {
   const [inputValue, setInputValue] = useState("");
   const [skills, setSkills] = useState([]);
   const [isSaving, setIsSaving] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Add the useEffect to fetch data 
+  useEffect(() => {
+    async function loadSkills() {
+      try {
+        const savedSkills = await getUserSkills();
+        setSkills(savedSkills);
+      } catch (error) {
+        console.error("Failed to load skills:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    loadSkills();
+  }, []);
 
   //Handle typing and adding a skill when pressing 'Enter' or ','
 

@@ -46,3 +46,29 @@ export async function saveUserSkills(skillsArray) {
     throw new Error("Failed to save skills to database");
   }
 }
+export async function getUserSkills() {
+  const { userId } = await auth();
+
+  if (!userId) {
+    return [];
+  }
+
+  try {
+    const user = await prisma.user.findUnique({
+      where: { clerkUserId: userId },
+      include: {
+        skills: true, // Fetch the related skills
+      },
+    });
+
+    // If the user exists and has skills, return skills
+    if (user && user.skills) {
+      return user.skills.map(skill => skill.name);
+    }
+    
+    return [];
+  } catch (error) {
+    console.error("Error fetching skills:", error);
+    return [];
+  }
+}
