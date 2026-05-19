@@ -26,12 +26,14 @@ export default function Quiz() {
     loading: generatingQuiz,
     fn: generateQuizFn,
     data: quizData,
+    error: quizError,
   } = useFetch(generateQuiz);
 
   const {
     loading: savingResult,
     fn: saveQuizResultFn,
     data: resultData,
+    error: saveResultError,
     setData: setResultData,
   } = useFetch(saveQuizResult);
 
@@ -67,11 +69,19 @@ export default function Quiz() {
     }
   };
 
+  const handleGenerateQuiz = async () => {
+    try {
+      await generateQuizFn();
+    } catch(error) {
+        console.log("hadleGenerateQuiz error:", error);
+    }
+  };
+
   const startNewQuiz = () => {
     setCurrentQuestion(0);
     setAnswers([]);
     setShowExplanation(false);
-    generateQuizFn();
+    handleGenerateQuiz();
     setResultData(null);
   };
 
@@ -99,10 +109,11 @@ export default function Quiz() {
             This quiz contains 10 questions specific to your industry and
             skills. Take your time and choose the best answer for each question.
           </p>
+            toast.error(quizError.message || "Something went wrong - quizError");
         </CardContent>
         <CardFooter>
-          <Button onClick={generateQuizFn} className="w-full">
-            Start Quiz
+          <Button onClick={handleGenerateQuiz} className="w-full">
+            {quizError ? "Try Again" : "Start Quiz"}
           </Button>
         </CardFooter>
       </Card>
@@ -159,10 +170,11 @@ export default function Quiz() {
             <BarLoader className="mt-4" width={"100%"} color="gray" />
           )}
           {currentQuestion < quizData.length - 1
-            ? "Next Question"
-            : "Finish Quiz"}
+              ? "Next Question"
+              : "Finish Quiz"}
         </Button>
       </CardFooter>
+      toast.error(saveResultError.message || "Failed to save result");
     </Card>
   );
 }

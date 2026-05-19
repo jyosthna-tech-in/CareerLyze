@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -38,6 +37,7 @@ export default function CoverLetterGenerator() {
     loading: generating,
     fn: generateLetterFn,
     data: generatedLetter,
+    error: generateLetterError,
   } = useFetch(generateCoverLetter);
 
   // Update content when letter is generated
@@ -126,6 +126,7 @@ export default function CoverLetterGenerator() {
                 )}
               </Button>
             </div>
+              toast.error(generateLetterError.message || "Failed to load letter");
           </form>
         </CardContent>
       </Card>

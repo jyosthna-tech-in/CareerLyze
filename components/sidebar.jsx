@@ -12,6 +12,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Settings,
+  Map,
 } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -35,6 +36,11 @@ const sidebarItems = [
     name: "Skill Analytics",
     href: "/skill-analytics",
     icon: PenBox,
+  },
+  {
+    name: "Career Roadmap",
+    href: "/career-roadmap",
+    icon: Map,
   },
   {
     name: "Settings",

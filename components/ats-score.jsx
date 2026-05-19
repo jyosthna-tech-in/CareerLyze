@@ -5,24 +5,23 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { getATSScore } from "@/actions/resume";
 import { Loader2, ShieldCheck, ChevronDown, ChevronUp } from "lucide-react";
+import useFetch from "@/hooks/use-fetch";
 
 export default function ATSScore({ content }) {
-  const [result, setResult] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const [isExpanded, setIsExpanded] = useState(true);
+  const {
+    data: result,
+    loading,
+    error,
+    fn: getATSScoreFn,
+  } = useFetch(getATSScore);
 
   const handleCheck = async () => {
     if (!content) return;
-    setLoading(true);
-    setError(null);
     try {
-      const data = await getATSScore(content);
-      setResult(data);
+      await getATSScoreFn(content);
     } catch (err) {
-      setError("Failed to analyze resume. Try again.");
-    } finally {
-      setLoading(false);
+      console.log("Failed to analyze resume. Try again.");
     }
   };
 
@@ -57,7 +56,9 @@ export default function ATSScore({ content }) {
       </Button>
 
       {error && (
-        <p className="text-xs text-destructive text-center">{error}</p>
+        <p className="text-xs text-destructive text-center">
+          {typeof error === "string" ? error : error?.message ?? "Something went wrong. Please try again."}
+        </p>
       )}
 
       {result && (

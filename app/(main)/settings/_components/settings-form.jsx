@@ -106,6 +106,16 @@ const SettingsForm = ({ user }) => {
     },
   ];
 
+  const handleResetSettings=()=>{
+    reset({
+      themePreference:"system",
+      emailNotifications:true,
+      pushNotifications:true,
+      aiGenerationEnabled:true,
+    });
+    toast.success("settings reset successfull!");
+  };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
       {/* Theme Settings */}
@@ -294,6 +304,15 @@ const SettingsForm = ({ user }) => {
           disabled={updateLoading}
         >
           Cancel
+        </Button>
+
+        <Button
+        type="button"
+        variant="destructive"
+        onClick={handleResetSettings}
+        disabled={updateLoading}
+        >
+          Reset Settings
         </Button>
       </div>
     </form>

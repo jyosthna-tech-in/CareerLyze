@@ -95,10 +95,14 @@ export function EntryFormProject({ type, entries, onChange }) {
       return;
     }
 
-    await improveWithAIFn({
-      current: description,
-      type: type.toLowerCase(), // 'experience', 'education', or 'project'
-    });
+    try {
+      await improveWithAIFn({
+        current: description,
+        type: type.toLowerCase(), // 'experience', 'education', or 'project'
+      });
+    } catch(error) {
+      console.log("improveWithAiFn error: ", error);
+    }
   };
 
   return (

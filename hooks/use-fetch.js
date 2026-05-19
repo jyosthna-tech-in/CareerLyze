@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { toast } from "sonner";
+import { getErrorMessage } from "@/lib/ai-errors";
 
-const useFetch = (cb) => {
+const useFetch = (cb, options = {}) => {
+  const { showErrorToast = true } = options;
   const [data, setData] = useState(undefined);
-  const [loading, setLoading] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const fn = async (...args) => {
@@ -14,9 +16,16 @@ const useFetch = (cb) => {
       const response = await cb(...args);
       setData(response);
       setError(null);
+      return response;
     } catch (error) {
-      setError(error);
-      toast.error(error.message);
+      const resolvedError = new Error(getErrorMessage(error));
+      setError(resolvedError);
+
+      if (showErrorToast) {
+        toast.error(resolvedError.message);
+      }
+
+      throw resolvedError;
     } finally {
       setLoading(false);
     }
