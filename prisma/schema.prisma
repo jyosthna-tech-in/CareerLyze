@@ -29,7 +29,7 @@ model User {
   aiGenerationEnabled Boolean @default(true)
   
   // Relations
-  skills        String[]  // Array of skills
+  skills Skill[] // Array of skills
   assessments   Assessment[]
   resume        Resume?
   coverLetter   CoverLetter[]
@@ -47,6 +47,12 @@ model Assessment {
   updatedAt     DateTime  @updatedAt
 
   @@index([userId])
+}
+
+model Skill{
+  id String @id @default(cuid())
+  name String @unique //one unique skill
+  users User[]
 }
 
 model Resume {

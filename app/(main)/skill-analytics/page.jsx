@@ -4,6 +4,7 @@ import React from "react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import SkillInput from "@/components/SkillInput";
 import { 
   Radar, 
   RadarChart, 
@@ -51,7 +52,7 @@ export default function SkillAnalyticsPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
+      <SkillInput/>
         {/* Left Col - Radar Chart */}
         <Card className="col-span-1 lg:col-span-1 bg-card/50 backdrop-blur border-border/50">
           <CardHeader>
